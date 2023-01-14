@@ -3,7 +3,7 @@ import ArgumentParser
 import SwiftSyntaxParser
 
 @main
-struct RewriteChecksumCommand: ParsableCommand {
+struct RewritePackageBinaryTarget: ParsableCommand {
     @Option(help: "URL of binary.")
     var url: String
 
@@ -31,6 +31,7 @@ struct RewriteChecksumCommand: ParsableCommand {
                 checksum: checksum
             )
         )
-        print(rewriter.visit(source))
+        try String(describing: rewriter.visit(source))
+            .write(to: packageSwift, atomically: true, encoding: .utf8)
     }
 }
